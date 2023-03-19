@@ -141,7 +141,52 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 80
-    ```
-    
-    
+ ```
+ 
+ 
+ * สร้างไฟล์ service.yaml
+ ```
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: service-ingress
+  namespace: spcn16
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+  - match: Host(`web.spcn16.local`)
+    kind: Rule
+    services:
+    - name: rancher-service
+      port: 80
+```
 
+
+
+
+# ขั้นตอนการ deploy rancher/hello-world
+
+* deploy hello-world.yaml
+ 
+       kubectl apply -f hello-world.yaml
+    
+* deploy service.yaml
+
+       kubectl apply -f service.yaml
+    
+* หลังจาก deploy ให้รันคำสั่ง minikube tunnel
+
+        minikube tunnel
+    
+* ทดสอบว่า deploy สำเร็จหรือไม่โดยการใช้ domain ที่ตั้งไว้ -[http://web.spcn16.local/]
+
+
+# ผลลัพธ์ทั้งหมด
+
+![image](https://user-images.githubusercontent.com/119166253/226194504-e2ed36e8-2f03-4679-a548-7f6207a6afe4.png)
+
+![image](https://user-images.githubusercontent.com/119166253/226194534-cd80ff2b-dc8a-4bfa-8008-69b757a9a0d8.png)
+
+![image](https://user-images.githubusercontent.com/119166253/226193916-dd0cefcf-faf3-4adf-96c8-e64961ea2216.png)
