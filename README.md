@@ -69,7 +69,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rancher-deployment
-  namespace: spcn21
+  namespace: spcn16
 spec:
   replicas: 1
   selector:
@@ -92,7 +92,7 @@ metadata:
   name: rancher-service
   labels:
     name: rancher-service
-  namespace: spcn21
+  namespace: spcn16
 spec:
   selector:
     app: rancher
@@ -102,3 +102,46 @@ spec:
     protocol: TCP
     targetPort: 80
 ```
+
+* สร้างไฟล์ rancher-hello-world.yaml
+```
+    apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-deployment
+  namespace: spcn16
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rancher
+  template:
+    metadata:
+      labels:
+        app: rancher
+    spec:
+      containers:
+      - name: rancher
+        image: rancher/hello-world
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher-service
+  labels:
+    name: rancher-service
+  namespace: spcn16
+spec:
+  selector:
+    app: rancher
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+    ```
+    
+    
+
