@@ -103,7 +103,7 @@ spec:
     targetPort: 80
 ```
 
-* สร้างไฟล์ rancher-hello-world.yaml
+* สร้างไฟล์ hello-world.yaml
 ```
     apiVersion: apps/v1
 kind: Deployment
